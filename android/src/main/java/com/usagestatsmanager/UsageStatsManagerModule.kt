@@ -26,7 +26,9 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
+import com.facebook.react.bridge.WritableNativeArray
 import com.facebook.react.bridge.WritableNativeMap
 import com.facebook.react.common.MapBuilder
 import com.usagestatsmanager.model.AppData
@@ -90,7 +92,7 @@ class UsageStatsManagerModule(reactContext: ReactApplicationContext) :
   @ReactMethod
   fun queryUsageStats(interval: Int, startTime: Double, endTime: Double, promise: Promise) {
     val packageManager: PackageManager = reactContext!!.packageManager
-    val result: WritableMap = WritableNativeMap()
+    val result: WritableArray = WritableNativeArray()
     val usageStatsManager: UsageStatsManager =
         reactContext?.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
     val queryUsageStats: List<UsageStats> =
@@ -110,7 +112,7 @@ class UsageStatsManagerModule(reactContext: ReactApplicationContext) :
             "appName",
             UsageUtils.parsePackageName(packageManager, us.packageName.toString()).toString()
         )
-        result.putMap(us.packageName, usageStats)
+        result.pushMap(usageStats)
       }
     }
 
