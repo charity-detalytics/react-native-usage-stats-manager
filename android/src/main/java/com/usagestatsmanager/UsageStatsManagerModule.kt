@@ -79,7 +79,7 @@ class UsageStatsManagerModule(reactContext: ReactApplicationContext) :
     return true
   }
 
-  @ReactMethod(isBlockingSynchronousMethod = true)
+  @ReactMethod
   fun showUsageAccessSettings(packageName: String) {
     val intent = Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS)
     if (packageExists(packageName)) {
